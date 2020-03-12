@@ -55,7 +55,6 @@
                           <th>Thersold</th>
                           <th>Status</th>
                           <th>Actions</th>
-                          <!-- <th style="text-align: center;"><a class="btn btn-success" style="font-size: 10px" href="{{route('product.create')}}">Add</a></th> -->
                         </tr>
                       </thead>
                       <tbody>
@@ -92,7 +91,7 @@
                     <div class="modal-dialog modal-lg">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h4 class="modal-title" id="modal_title"></h4>
+                          <h4 class="modal-title" id="modal_title">Add Product</h4>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
@@ -136,11 +135,10 @@
 
                           <!-- /.Edit Form Content -->
                         </div>
-                        <div class="modal-footer">
+                        <!-- <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                          <!-- <button type="submit" class="btn btn-primary">Save</button> -->
-                          
-                        </div>
+                          <button type="submit" class="btn btn-primary">Save</button>
+                        </div> -->
                       </div>
                       <!-- /.modal-content -->
                     </div>
@@ -241,7 +239,6 @@
 
         $('body').on('click', '#add-product', function () {
           $('.AddForm').trigger("reset");
-          $('#modal_title').html('Add Product');
           $('#AddProduct').modal('show');              
         });
 
