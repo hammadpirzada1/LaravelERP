@@ -116,6 +116,39 @@
                   </div>
                   <!-- /.Add Product Area End -->
 
+                  <!-- /Edit Product Area -->
+                  <div class="modal fade" id="EditProduct" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Edit Product</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <!-- /Edit Form Content -->
+                          
+                          {{ Form::model($product, ['route'=>['product.update',$value->id],'method'=>'PATCH' , 'class' => 'EditForm']) }}
+                            <input type="hidden" id="prod_id" name="product_id" value=""/>
+                            @include('admin.product.product_master')
+                          {{ Form::close() }}
+
+                          <!-- /.Edit Form Content -->
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                          <!-- <button type="submit" class="btn btn-primary">Save</button> -->
+                          
+                        </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                  </div>
+                  <!-- /.Edit Product Area End -->
+
+
                   <!-- /Product Detail Area -->
                   <div class="modal fade" id="DetailProduct" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
@@ -176,7 +209,7 @@
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                           {{ Form::open(['method' => 'DELETE','route' => ['product.destroy', $value->id]]) }}
-                            <input type="hidden" id="prod_id" name="product_id" value=""/>
+                            <input type="hidden" id="prod2_id" name="product_id" value=""/>
                             <button type="submit" class="btn btn-danger">Delete</button>
                           {{ Form::close() }}
                           
@@ -215,24 +248,24 @@
         /* When click edit user */
         $('body').on('click', '#edit-product', function () {
           var p_id = $(this).data('id');
+          $('#prod_id').val(p_id);
           $.get('http://127.0.0.1:8000/product/' + p_id + '/edit', function (data) {
-              $('#modal_title').html('Edit Product');
-              $('#AddProduct').modal('show');
-              $('#title').val(data.title);
-              $('#product_category_id').val(data.product_category_id);
-              $('#unit_id').val(data.unit_id);
-              $('#inventory_val').val(data.inventory_val);
-              $('#price').val(data.price);
-              $('#discount').val(data.discount);
-              $('#threshold').val(data.threshold);
-              $('#short_desc').val(data.short_desc);
-              $('#long_desc').val(data.long_desc);
+              $('#EditProduct').modal('show');
+              $('.EditForm #title').val(data.title);
+              $('.EditForm #product_category_id').val(data.product_category_id);
+              $('.EditForm #unit_id').val(data.unit_id);
+              $('.EditForm #inventory_val').val(data.inventory_val);
+              $('.EditForm #price').val(data.price);
+              $('.EditForm #discount').val(data.discount);
+              $('.EditForm #threshold').val(data.threshold);
+              $('.EditForm #short_desc').val(data.short_desc);
+              $('.EditForm #long_desc').val(data.long_desc);
           });
         });
 
         $('body').on('click', '#delete-product', function () {
           var p_id = $(this).data('id');
-          $('#prod_id').val(p_id);
+          $('#prod2_id').val(p_id);
           $('#DeleteProduct').modal('show');
         });
 

@@ -80,7 +80,7 @@ class ProductMasterController extends Controller
         if(!$this->checkPermission())
             return redirect('home');
 
-        $this->validate($request,[ 
+        $this->validate($request, [ 
             'title' => 'required|string|max:250',
             'product_category_id' => 'required',
             'unit_id' => 'required', 
@@ -94,7 +94,7 @@ class ProductMasterController extends Controller
             'long_desc' => 'required|string',
         ]);
                 
-        $product = ProductMaster::updateOrCreate(request()->except(['_token']));
+        $product = ProductMaster::create($request->all());
 
         Log::create(['module_name'=>'product_create', 'user_id'=>Auth::id()]);
 
@@ -142,19 +142,20 @@ class ProductMasterController extends Controller
             return redirect('home');
 
         $this->validate($request,[
-            'product_category_id' => 'required', 
             'title' => 'required|string|max:250',
+            'product_category_id' => 'required',
+            'unit_id' => 'required', 
+            'inventory_val' => 'required',
+            'price' => 'required|int',
+            'discount' => 'required|int',
+            'threshold' => 'required',
+            'status' => 'required',
+            // 'created_by' => 'required',            
             'short_desc' => 'required|string|max:250',
             'long_desc' => 'required|string',
-            'price' => 'required|int',
-            'cost' => 'required|int',
-            'discount' => 'required|int',
-            'status' => 'required',
-            // 'created_by' => 'required',
-            'threshold' => 'required',
         ]);
 
-        ProductMaster::find($id)->update($request->all());
+        ProductMaster::find($request->product_id)->update($request->all());
 
         Log::create(['module_name'=>'product_update', 'user_id'=>Auth::id()]);
 
