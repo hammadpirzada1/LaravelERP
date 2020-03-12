@@ -7,6 +7,7 @@ use App\Model\Log;
 use Illuminate\Http\Request;
 
 use Auth;
+use Response;
 
 class ProductCategoryController extends Controller
 {
@@ -71,8 +72,8 @@ class ProductCategoryController extends Controller
      */
     public function show($id)
     {
-         $category = ProductCategory::find($id);
-        return view('admin.category.category_detail',compact('category'));
+        $category = ProductCategory::find($id);
+        return Response::json($category);
     }
 
     /**
@@ -87,7 +88,7 @@ class ProductCategoryController extends Controller
             return redirect('home');
 
         $category = ProductCategory::find($id);
-        return view('admin.category.category_update',compact('category'));
+        return Response::json($category);
     }
 
     /**
@@ -106,7 +107,7 @@ class ProductCategoryController extends Controller
             'title' => 'required' 
         ]);
 
-        ProductCategory::find($id)->update($request->all());
+        ProductCategory::find($request->category_id)->update($request->all());
 
         Log::create(['module_name'=>'category_update', 'user_id'=>Auth::id()]);
         
@@ -119,13 +120,13 @@ class ProductCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         if(!$this->checkPermission())
             return redirect('home');
         
         
-        ProductCategory::find($id)->delete();
+        $category = ProductCategory::find($request->category_id)->delete();
 
         Log::create(['module_name'=>'category_delete', 'user_id'=>Auth::id()]);
 

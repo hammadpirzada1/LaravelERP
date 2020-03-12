@@ -6,6 +6,7 @@ use App\Model\Warehouse;
 use Illuminate\Http\Request;
 use App\Model\Log;
 use Auth;
+use Response;
 
 class WarehouseController extends Controller
 {
