@@ -173,7 +173,7 @@ class ProductMasterController extends Controller
         if(!$this->checkPermission())
             return redirect('home');
     
-        $product = ProductMaster::find($request->product_id)->delete();
+        ProductMaster::find($request->product_id)->delete();
 
         Log::create(['module_name'=>'product_delete', 'user_id'=>Auth::id()]);
 

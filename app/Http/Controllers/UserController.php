@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Model\Log;
 use Auth;
+use Response;
 
 class UserController extends Controller
 {
@@ -27,7 +28,14 @@ class UserController extends Controller
             return redirect('home');
 
         $user = User::all();
-        return view('admin.user.user_list', compact('user'));
+
+        $role = Role::all();
+        
+        $role_name = [];
+        foreach($role as $roles){
+            $role_name[$roles->id] = $roles->name;
+        }
+        return view('admin.user.user_list', compact('user','role_name'));
     }
 
     /**
@@ -63,7 +71,8 @@ class UserController extends Controller
             return redirect('home'); 
         
         $user = User::find($id);
-        return view('admin.user.user_detail',compact('user'));
+        return Response::json($user);
+        // return view('admin.user.user_detail',compact('user'));
     }
 
     /**
@@ -85,7 +94,8 @@ class UserController extends Controller
         }
 
         $user = User::find($id);
-        return view('admin.user.user_update',compact('user', 'role_name'));
+        return Response::json($user);
+        // return view('admin.user.user_update',compact('user', 'role_name'));
     }
 
     /**
@@ -106,11 +116,11 @@ class UserController extends Controller
             'role_id' => 'required',
         ]);
 
-        $user = User::find($id);
+        $user = User::find($request->user_id);
         $role = Role::find($request->role_id);
         $user->syncRoles([$role]);
 
-        User::find($id)->update($request->all());
+        User::find($request->user_id)->update($request->all());
 
         Log::create(['module_name'=>'user_update', 'user_id'=>Auth::id()]);
 
@@ -123,12 +133,12 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         if(!$this->checkPermission())
             return redirect('home');
         
-        User::find($id)->delete();
+        User::find($request->user_id)->delete();
 
         Log::create(['module_name'=>'user_delete', 'user_id'=>Auth::id()]);
 

@@ -128,7 +128,7 @@
                         <div class="modal-body">
                           <!-- /Edit Form Content -->
                           
-                          {{ Form::model($product, ['route'=>['product.update',$value->id],'method'=>'PATCH' , 'class' => 'EditForm']) }}
+                          {{ Form::model($product, ['route'=>['product.update', '1'],'method'=>'PATCH' , 'class' => 'EditForm']) }}
                             <input type="hidden" id="prod_id" name="product_id" value=""/>
                             @include('admin.product.product_master')
                           {{ Form::close() }}
@@ -161,19 +161,19 @@
                           
                             <div class="form-group">
                                 <strong>Title: </strong>
-                                <label id="d_title"></label>
+                                <p id="d_title"></p>
                             </div>                
                             <div class="form-group">
                                 <strong>Description: </strong>
-                                <label id="d_desc"></label>
+                                <p id="d_desc"></p>
                             </div>
                             <div class="form-group">
                                 <strong>Price: </strong>
-                                <label id="d_price"></label>
+                                <p id="d_price"></p>
                             </div>
                             <div class="form-group">
                                 <strong>Status: </strong>
-                                <label id="d_status"></label>
+                                <p id="d_status"></p>
                             </div>
 
                         </div>
@@ -206,7 +206,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                          {{ Form::open(['method' => 'DELETE','route' => ['product.destroy', $value->id]]) }}
+                          {{ Form::open(['method' => 'DELETE','route' => ['product.destroy', '1']]) }}
                             <input type="hidden" id="prod2_id" name="product_id" value=""/>
                             <button type="submit" class="btn btn-danger">Delete</button>
                           {{ Form::close() }}

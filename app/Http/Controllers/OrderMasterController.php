@@ -9,6 +9,7 @@ use App\User;
 use App\Model\Log;
 use Auth;
 use Illuminate\Http\Request;
+use Response;
 
 class OrderMasterController extends Controller
 {
@@ -26,9 +27,11 @@ class OrderMasterController extends Controller
      */
     public function index()
     {
+        $product = ProductMaster::all();
+
         $order = OrderMaster::with('user')->get();
 
-        return view('admin.order.order_list', compact('order'));
+        return view('admin.order.order_list', compact('order', 'product'));
     }
 
     /**
@@ -40,10 +43,6 @@ class OrderMasterController extends Controller
     {
         $product = ProductMaster::all();
         
-        // $product_list = [];
-        // foreach($product as $products){
-        //     $product_list[$products->id] = $products->title;
-        // }
         return view('admin.order.order_create', compact('product'));
     }
 
@@ -64,8 +63,9 @@ class OrderMasterController extends Controller
         $order_master = OrderMaster::create($request->all());
 
         $product = ProductMaster::all();
+        $order = OrderMaster::with('user')->get();
 
-        $order = $order_master->id;
+        // $order = $order_master->id;
 
         // $product_list = [];
         // foreach($product as $products){
@@ -73,9 +73,10 @@ class OrderMasterController extends Controller
         // }
         Log::create(['module_name'=>'order_create', 'user_id'=>Auth::id()]);
         
-        return view('admin.order.order_item', compact('order_master', 'order', 'product'));
-
-        // return redirect()->route('order.index')->with('success','Order Created Successfully');
+        // return view('admin.order.order_item', compact('order_master', 'order', 'product'));
+        $order_id = Response::json($order);
+        
+        return view('admin.order.order_list', compact('order_id', 'product', 'order'));        
     }
 
     /**
@@ -86,9 +87,12 @@ class OrderMasterController extends Controller
      */
     public function show($id)
     {
-        $order = OrderMaster::find($id);
+        $order = OrderMaster::with('user')->find($id);
         $item = OrderMaster::with('product_masters')->find($id);
-        return view('admin.order.order_detail',compact('order', 'item'));
+
+        return Response::json([$order, $item]);
+
+        // return view('admin.order.order_detail',compact('order', 'item'));
     }
 
     /**
@@ -103,7 +107,8 @@ class OrderMasterController extends Controller
             return redirect('home');
 
         $order = OrderMaster::find($id);
-        return view('admin.order.order_update',compact('order'));
+
+        return Response::json($order);
     }
 
     /**
@@ -125,7 +130,7 @@ class OrderMasterController extends Controller
             'status' => 'required',
         ]);
 
-        OrderMaster::find($id)->update($request->all());
+        OrderMaster::find($request->order_id)->update($request->all());
 
         Log::create(['module_name'=>'order_update', 'user_id'=>Auth::id()]);
 
@@ -138,15 +143,14 @@ class OrderMasterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         if(!$this->checkPermission())
             return redirect('home');
-        
-        
-        OrderMaster::find($id)->delete();
 
-        Log::create(['module_name'=>'order_update', 'user_id'=>Auth::id()]);
+        OrderMaster::find($request->order_id)->delete();
+
+        Log::create(['module_name'=>'order_delete', 'user_id'=>Auth::id()]);
 
         return redirect()->route('order.index')->with('success','Order Deleted Successfully');
     }
