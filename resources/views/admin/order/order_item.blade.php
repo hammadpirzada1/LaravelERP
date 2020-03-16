@@ -54,7 +54,7 @@
                                   <td style="text-align: center;" colspan="2">
                                     <button type="button" class="btn btn-success add-row">Add</button>
                                     <button type="button" class="btn btn-danger delete-row">Remove</button>
-                                  </td>                      
+                                  </td>               
                                 </tr>
                               </thead>
                               <tbody>     

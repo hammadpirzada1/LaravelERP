@@ -29,9 +29,11 @@ class OrderMasterController extends Controller
     {
         $product = ProductMaster::all();
 
+        $order_master = OrderMaster::all();
+
         $order = OrderMaster::with('user')->get();
 
-        return view('admin.order.order_list', compact('order', 'product'));
+        return view('admin.order.order_list', compact('order', 'product', 'order_master'));
     }
 
     /**
@@ -74,6 +76,7 @@ class OrderMasterController extends Controller
         Log::create(['module_name'=>'order_create', 'user_id'=>Auth::id()]);
         
         // return view('admin.order.order_item', compact('order_master', 'order', 'product'));
+        
         $order_id = Response::json($order);
         
         return view('admin.order.order_list', compact('order_id', 'product', 'order'));        
@@ -162,9 +165,12 @@ class OrderMasterController extends Controller
         
         $order = OrderMaster::find($request->order_master_id);
 
+        $order->product_masters()->detach();
+
         for($i = 0; $i < count($request->product_master_id); $i++)
         {
             $order->product_masters()->attach($request->product_master_id[$i], ['discount'=> $request->discount, 'discount_unit'=> $request->discount_unit]);
+        
         }
         return redirect()->route('order.index')->with('success','Order Created Successfully');
     }
