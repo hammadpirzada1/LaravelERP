@@ -32,6 +32,6 @@
                           </div>
                           
                           <div class="col-md-12">
-                            {{Form::button(isset($model)? 'Update' : 'Save', ['class' => 'btn btn-primary','type' => 'submit'])}}
+                            {{Form::button(isset($model)? 'Update' : 'Save', ['class' => 'btn btn-dark','type' => 'submit'])}}
                           </div>   
                       </div>
