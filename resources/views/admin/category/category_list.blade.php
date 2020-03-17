@@ -113,6 +113,7 @@
                           <!-- /Edit Form Content -->
                           
                           {{ Form::model($category, ['route'=>['category.update', '1'],'method'=>'PATCH' , 'class' => 'EditForm']) }}
+
                             <input type="hidden" id="cat_id" name="category_id" value=""/>
                             @include('admin.category.category_master')
                           {{ Form::close() }}
@@ -182,6 +183,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
                           {{ Form::open(['method' => 'DELETE','route' => ['category.destroy', '1']]) }}
                             <input type="hidden" id="cat2_id" name="category_id" value=""/>
                             <button type="submit" class="btn btn-danger">Delete</button>
