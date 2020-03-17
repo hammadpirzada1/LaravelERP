@@ -1,6 +1,6 @@
 <!-- form start -->
                         <div class="row">
-                          <div class="col-md-4">
+                          <div class="col-md-12">
                             <div class="form-group">
                               {{Form::label('name','Role Name')}}
                               {{Form::text('name', null,['class' => 'form-control','id' => 'id','placeholder' => 'Enter Role'])}}

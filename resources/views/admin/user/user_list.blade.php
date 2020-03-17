@@ -69,7 +69,7 @@
 
                    <!-- /Edit User Area -->
                   <div class="modal fade" id="EditUser" aria-hidden="true" style="display: none;">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
                           <h4 class="modal-title">Edit User</h4>
@@ -101,7 +101,7 @@
 
                     <!-- /User Detail Area -->
                   <div class="modal fade" id="DetailUser" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
                           <h4 class="modal-title">User Details</h4>
@@ -113,15 +113,15 @@
                           
                             <div class="form-group">
                                 <strong>Role ID: </strong>
-                                <label id="d_role_id"></label>
+                                <p id="d_role_id"></p>
                             </div>                
                             <div class="form-group">
                                 <strong>Name: </strong>
-                                <label id="d_name"></label>
+                                <p id="d_name"></p>
                             </div>
                             <div class="form-group">
                                 <strong>Email: </strong>
-                                <label id="d_email"></label>
+                                <p id="d_email"></p>
                             </div>
 
                         </div>

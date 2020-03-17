@@ -44,7 +44,6 @@
                         <tr>
                           <th>No.</th>
                           <th>Role Name</th>
-                          <th>Guard Name</th>
                           <th>Actions</th>
                         </tr>
                         </tr>
@@ -54,9 +53,7 @@
                           @foreach($role as $key => $value)
                           <tr>
                             <td >{{$no++}}</td>
-                            <td >{{$value->name}}</td>
-                            <td >{{$value->guard_name }}</td>
-                            
+                            <td >{{$value->name}}</td>                            
                             <td style="text-align: center;">
                               <a class="btn btn-info btn-sm" href="javascript:void(0)" id="view-role" data-id="{{$value->id}}" style="font-size: 10px">View</a>
                               @role('admin')
@@ -74,7 +71,7 @@
 
                   <!-- /Add Role Area -->
                   <div class="modal fade" id="AddRole" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
                           <h4 class="modal-title" id="modal_title"></h4>
@@ -103,7 +100,7 @@
 
                    <!-- /Edit Role Area -->
                   <div class="modal fade" id="EditRole" aria-hidden="true" style="display: none;">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
                           <h4 class="modal-title">Edit Role</h4>
@@ -135,7 +132,7 @@
 
                     <!-- /Role Detail Area -->
                   <div class="modal fade" id="DetailRole" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
                           <h4 class="modal-title">Role Details</h4>
@@ -147,11 +144,11 @@
                           
                             <div class="form-group">
                                 <strong>Role Name: </strong>
-                                <label id="d_role_name"></label>
+                                <p id="d_role_name"></p>
                             </div>                
                             <div class="form-group">
                                 <strong>Guard Name: </strong>
-                                <label id="d_guard_name"></label>
+                                <p id="d_guard_name"></p>
                             </div>
 
                         </div>
