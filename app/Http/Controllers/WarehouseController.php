@@ -73,7 +73,8 @@ class WarehouseController extends Controller
     public function show($id)
     {
         $warehouse = Warehouse::find($id);
-        return view('admin.warehouse.warehouse_detail',compact('warehouse'));
+        return Response::json($warehouse);
+        // return view('admin.warehouse.warehouse_detail',compact('warehouse'));
     }
 
     /**
@@ -88,7 +89,8 @@ class WarehouseController extends Controller
             return redirect('home');
 
         $warehouse = Warehouse::find($id);
-        return view('admin.warehouse.warehouse_update',compact('warehouse'));
+        return Response::json($warehouse);
+        // return view('admin.warehouse.warehouse_update',compact('warehouse'));
     }
 
     /**
@@ -107,7 +109,7 @@ class WarehouseController extends Controller
             'title' => 'required|string|max:250',
             'location' => 'required|string|max:250',
         ]);
-        Warehouse::find($id)->update($request->all());
+        Warehouse::find($request->warehouse_id)->update($request->all());
 
         Log::create(['module_name'=>'warehouse_update', 'user_id'=>Auth::id()]);
 
@@ -120,12 +122,12 @@ class WarehouseController extends Controller
      * @param  \App\Model\Warehouse  $warehouse
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         if(!$this->checkPermission())
             return redirect('home');
         
-        Warehouse::find($id)->delete();
+        Warehouse::find($request->warehouse_id)->delete();
 
         Log::create(['module_name'=>'warehouse_delete', 'user_id'=>Auth::id()]);
 

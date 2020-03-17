@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Model\Log;
 use Auth;
+use Response;
+
 
 class RoleController extends Controller
 {
@@ -79,7 +81,9 @@ class RoleController extends Controller
             return redirect('home');
         
         $role = Role::findById($id);
-        return view('admin.role.role_detail',compact('role'));
+        return Response::json($role);
+
+        // return view('admin.role.role_detail',compact('role'));
     }
 
     /**
@@ -94,7 +98,9 @@ class RoleController extends Controller
             return redirect('home');
 
         $role = Role::findById($id);
-        return view('admin.role.role_update',compact('role'));
+        return Response::json($role);
+
+        // return view('admin.role.role_update',compact('role'));
     }
 
     /**
@@ -112,7 +118,10 @@ class RoleController extends Controller
         $this->validate($request,[ 
             'name' => 'required|string|max:250',
         ]);
-        Role::findById($id)->update($request->all());
+        $role = Role::findById($request->role_id);
+
+        $role->name = $request->name;
+        $role->save();
 
         Log::create(['module_name'=>'role_update', 'user_id'=>Auth::id()]);
 
@@ -125,12 +134,12 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         if(!$this->checkPermission())
             return redirect('home');
         
-        Role::findById($id)->delete();
+        Role::findById($request->role_id)->delete();
 
         Log::create(['module_name'=>'role_delete', 'user_id'=>Auth::id()]);
 

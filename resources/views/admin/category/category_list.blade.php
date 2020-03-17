@@ -112,7 +112,8 @@
                         <div class="modal-body">
                           <!-- /Edit Form Content -->
                           
-                          {{ Form::model($category, ['route'=>['category.update',$value->id],'method'=>'PATCH' , 'class' => 'EditForm']) }}
+                          {{ Form::model($category, ['route'=>['category.update', '1'],'method'=>'PATCH' , 'class' => 'EditForm']) }}
+
                             <input type="hidden" id="cat_id" name="category_id" value=""/>
                             @include('admin.category.category_master')
                           {{ Form::close() }}
@@ -121,7 +122,7 @@
                         </div>
                         <!-- <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                          <button type="submit" class="btn btn-primary">Save</button>                          
+                          <button type="submit" class="btn btn-dark">Save</button>                          
                         </div> -->
                       </div>
                       <!-- /.modal-content -->
@@ -145,11 +146,11 @@
                           
                             <div class="form-group">
                                 <strong>Title: </strong>
-                                <label id="d_title"></label>
+                                <p id="d_title"></p>
                             </div>                
                             <div class="form-group">
                                 <strong>Parent Category: </strong>
-                                <label id="d_parent"></label>
+                                <p id="d_parent"></p>
                             </div>
 
                         </div>
@@ -182,7 +183,8 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                          {{ Form::open(['method' => 'DELETE','route' => ['category.destroy', $value->id]]) }}
+
+                          {{ Form::open(['method' => 'DELETE','route' => ['category.destroy', '1']]) }}
                             <input type="hidden" id="cat2_id" name="category_id" value=""/>
                             <button type="submit" class="btn btn-danger">Delete</button>
                           {{ Form::close() }}

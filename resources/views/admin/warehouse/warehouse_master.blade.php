@@ -25,13 +25,13 @@
                               {{Form::label('status','Status')}}
 
                               <div class="form-group {{$errors->has('status') ? 'has-error' : ''}} "></div>
-                              {{Form::select('status',['1' => '1', '2' => '2', '3' => '3'],'1', ['class' => 'form-control','id' => 'status'])}}
+                              {{Form::select('status',['active' => 'active', 'inactive' => 'inactive'],'inactive', ['class' => 'form-control','id' => 'status'])}}
                               <!-- {{$errors->first('unit','<p class="help-block">:message</p>')}} -->
 
                               </div>
                           </div>
                           
                           <div class="col-md-12">
-                            {{Form::button(isset($model)? 'Update' : 'Save', ['class' => 'btn btn-primary','type' => 'submit'])}}
+                            {{Form::button(isset($model)? 'Update' : 'Save', ['class' => 'btn btn-dark','type' => 'submit'])}}
                           </div>   
                       </div>
