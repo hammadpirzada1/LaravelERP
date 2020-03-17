@@ -31,21 +31,19 @@ class ProductMasterController extends Controller
         $unit = Unit::with('products')->get();
 
         $unit_name = [];
-
         foreach($unit as $units){
             $unit_name[$units->id] = $units->name;
         }
 
         $category = ProductCategory::with('product_master')->get();
 
-        $check = 1;
         $category_name = [];
         foreach($category as $categories){
             $category_name[$categories->id] = $categories->title;
         }
 
         $product = ProductMaster::all();
-        return view('admin.product.product_list', compact('product', 'category_name', 'check', 'unit_name'));
+        return view('admin.product.product_list', compact('product', 'category_name', 'unit_name'));
     }
 
     /**
@@ -55,18 +53,17 @@ class ProductMasterController extends Controller
      */
     public function create()
     {
-        if(!$this->checkPermission())
-            return redirect('home');
+        // if(!$this->checkPermission())
+        //     return redirect('home');
 
-        $category = ProductCategory::with('product_master')->get();
+        // $category = ProductCategory::with('product_master')->get();
         
-        $check = 1;
-        $category_name = [];
-        foreach($category as $categories){
-            $category_name[$categories->id] = $categories->title;
-        }
+        // $category_name = [];
+        // foreach($category as $categories){
+        //     $category_name[$categories->id] = $categories->title;
+        // }
 
-        return view('admin.product.product_create', compact('category_name', 'check'));
+        // return view('admin.product.product_create', compact('category_name'));
     }
 
     /**
@@ -91,10 +88,22 @@ class ProductMasterController extends Controller
             'status' => 'required',
             // 'created_by' => 'required',            
             'short_desc' => 'required|string|max:250',
-            'long_desc' => 'required|string',
+            // 'long_desc' => 'required|string',
         ]);
                 
-        $product = ProductMaster::create($request->all());
+        $product = ProductMaster::create([
+            'title'=>$request->title, 
+            'product_category_id' => $request->product_category_id,
+            'unit_id' => $request->unit_id, 
+            'inventory_val' => $request->inventory_val,
+            'price' => $request->price,
+            'discount' => $request->discount,
+            'threshold' => $request->threshold,
+            'status' => $request->status,
+            'created_by' => Auth::id(),            
+            'short_desc' => $request->short_desc,
+            'long_desc' => $request->long_desc,
+        ]);
 
         Log::create(['module_name'=>'product_create', 'user_id'=>Auth::id()]);
 
@@ -124,7 +133,7 @@ class ProductMasterController extends Controller
     {
         if(!$this->checkPermission())
             return redirect('home');
-
+        
         $product = ProductMaster::find($id);
         return Response::json($product);
     }
@@ -152,10 +161,22 @@ class ProductMasterController extends Controller
             'status' => 'required',
             // 'created_by' => 'required',            
             'short_desc' => 'required|string|max:250',
-            'long_desc' => 'required|string',
+            // 'long_desc' => 'required|string',
         ]);
 
-        ProductMaster::find($request->product_id)->update($request->all());
+        ProductMaster::find($request->product_id)->update([
+            'title'=>$request->title, 
+            'product_category_id' => $request->product_category_id,
+            'unit_id' => $request->unit_id, 
+            'inventory_val' => $request->inventory_val,
+            'price' => $request->price,
+            'discount' => $request->discount,
+            'threshold' => $request->threshold,
+            'status' => $request->status,
+            'modified_by' => Auth::id(),            
+            'short_desc' => $request->short_desc,
+            'long_desc' => $request->long_desc,
+        ]);
 
         Log::create(['module_name'=>'product_update', 'user_id'=>Auth::id()]);
 
