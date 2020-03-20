@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Warehouse;
+use App\Model\ProductMaster;
 use Illuminate\Http\Request;
 use App\Model\Log;
 use Auth;
@@ -24,8 +25,17 @@ class WarehouseController extends Controller
      */
     public function index()
     {
-        $warehouse = Warehouse::all();
-        return view('admin.warehouse.warehouse_list', compact('warehouse'));
+        $count = 0;
+
+        $warehouse = Warehouse::with('product_masters')->get();
+        foreach ($warehouse as $warehouses) 
+        {
+            $ware_house[$count] = $warehouses;
+            $count++;
+        }
+        
+        $product = ProductMaster::all();
+        return view('admin.warehouse.warehouse_list', compact('warehouse','product','ware_house'));
     }
 
     /**
@@ -73,7 +83,8 @@ class WarehouseController extends Controller
     public function show($id)
     {
         $warehouse = Warehouse::find($id);
-        return Response::json($warehouse);
+        $item = Warehouse::with('product_masters')->find($id);
+        return Response::json([$warehouse, $item]);
         // return view('admin.warehouse.warehouse_detail',compact('warehouse'));
     }
 
@@ -132,5 +143,21 @@ class WarehouseController extends Controller
         Log::create(['module_name'=>'warehouse_delete', 'user_id'=>Auth::id()]);
 
         return redirect()->route('warehouse.index')->with('success','Record Deleted Successfully');
+    }
+    public function addProducts(Request $request)
+    {
+        if(!$this->checkPermission())
+            return redirect('home');
+        
+        $warehouse = Warehouse::find($request->warehouse_master_id);
+
+        $warehouse->product_masters()->detach();
+
+        for($i = 0; $i < count($request->product_master_id); $i++)
+        {
+            $warehouse->product_masters()->attach($request->product_master_id[$i]);
+        
+        }
+        return redirect()->route('warehouse.index')->with('success','Warehouse Created Successfully');
     }
 }

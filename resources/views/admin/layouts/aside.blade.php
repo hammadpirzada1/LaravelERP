@@ -58,14 +58,14 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <!-- add class active to highlight -->
-                <a href="{{ asset('category') }}" class="nav-link ">
+                <a href="{{ asset('admin/category') }}" class="nav-link ">
                   <i class="fas fa-th nav-icon"></i>
                   <p>Product Categories</p>
                 </a>
               </li>
               <li class="nav-item">
                 <!-- add class active to highlight -->
-                <a href="{{ asset('product') }}" class="nav-link ">
+                <a href="{{ asset('admin/product') }}" class="nav-link ">
                   <i class="far fa-copy nav-icon"></i>
                   <p>Product List</p>
                 </a>
@@ -87,7 +87,7 @@
           </li> -->
 
           <li class="nav-item">
-            <a href="{{ asset('order') }}" class="nav-link">
+            <a href="{{ asset('admin/order') }}" class="nav-link">
               <i class="nav-icon fas fa-box-open"></i>
               <p>
                 Orders
@@ -96,7 +96,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ asset('warehouse') }}" class="nav-link">
+            <a href="{{ asset('admin/warehouse') }}" class="nav-link">
               <i class="nav-icon fas fa-warehouse"></i>
               <p>
                 Warehouses
@@ -117,14 +117,14 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <!-- add class active to highlight -->
-                <a href="{{ asset('user') }}" class="nav-link ">
+                <a href="{{ asset('admin/user') }}" class="nav-link ">
                   <i class="fas fa-user nav-icon"></i>
                   <p>Users</p>
                 </a>
               </li>
               <li class="nav-item">
                 <!-- add class active to highlight -->
-                <a href="{{ asset('role') }}" class="nav-link ">
+                <a href="{{ asset('admin/role') }}" class="nav-link ">
                   <i class="far fa-id-card nav-icon"></i>
                   <p>Roles</p>
                 </a>

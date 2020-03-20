@@ -220,7 +220,7 @@
         $('body').on('click', '#edit-role', function () {
           var r_id = $(this).data('id');
           $('#role_id').val(r_id);
-          $.get('http://127.0.0.1:8000/role/' + r_id + '/edit', function (data) {
+          $.get('http://127.0.0.1:8000/admin/role/' + r_id + '/edit', function (data) {
               $('#EditRole').modal('show');
               $('.EditForm #role_name').val(data.name);
               $('.EditForm #guard_name').val(data.guard_name);
@@ -236,7 +236,7 @@
         
         $('body').on('click', '#view-role', function () {
           var r_id = $(this).data('id');
-          $.get('http://127.0.0.1:8000/role/' + r_id, function (data) {
+          $.get('http://127.0.0.1:8000/admin/role/' + r_id, function (data) {
             $('#DetailRole').modal('show');
               $('#d_role_name').html(data.name);
               $('#d_guard_name').html(data.guard_name);

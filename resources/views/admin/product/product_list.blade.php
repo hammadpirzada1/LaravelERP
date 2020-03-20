@@ -149,7 +149,7 @@
 
                   <!-- /Product Detail Area -->
                   <div class="modal fade" id="DetailProduct" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
                           <h4 class="modal-title">Product Details</h4>
@@ -246,7 +246,7 @@
         $('body').on('click', '#edit-product', function () {
           var p_id = $(this).data('id');
           $('#prod_id').val(p_id);
-          $.get('http://127.0.0.1:8000/product/' + p_id + '/edit', function (data) {
+          $.get('http://127.0.0.1:8000/admin/product/' + p_id + '/edit', function (data) {
               $('#EditProduct').modal('show');
               $('.EditForm #title').val(data.title);
               $('.EditForm #product_category_id').val(data.product_category_id);
@@ -269,7 +269,7 @@
         
         $('body').on('click', '#view-product', function () {
           var p_id = $(this).data('id');
-          $.get('http://127.0.0.1:8000/product/' + p_id, function (data) {
+          $.get('http://127.0.0.1:8000/admin/product/' + p_id, function (data) {
             $('#DetailProduct').modal('show');
               $('#d_title').html(data.title);
               $('#d_price').html(data.price);

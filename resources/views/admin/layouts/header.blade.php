@@ -27,6 +27,10 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.cs">
+
+
+
   <style>
     .Form .container{
         border: 1px solid #d6cdcd;

@@ -53,17 +53,7 @@ class ProductMasterController extends Controller
      */
     public function create()
     {
-        // if(!$this->checkPermission())
-        //     return redirect('home');
-
-        // $category = ProductCategory::with('product_master')->get();
         
-        // $category_name = [];
-        // foreach($category as $categories){
-        //     $category_name[$categories->id] = $categories->title;
-        // }
-
-        // return view('admin.product.product_create', compact('category_name'));
     }
 
     /**
@@ -107,7 +97,6 @@ class ProductMasterController extends Controller
 
         Log::create(['module_name'=>'product_create', 'user_id'=>Auth::id()]);
 
-        // return Response::json($product);
         return redirect()->route('product.index')->with('success','Record Created Successfully');
     }
 

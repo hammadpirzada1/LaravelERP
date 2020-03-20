@@ -27,13 +27,22 @@ class OrderMasterController extends Controller
      */
     public function index()
     {
+        $count = 0;
+
         $product = ProductMaster::all();
 
         $order_master = OrderMaster::all();
 
         $order = OrderMaster::with('user')->get();
 
-        return view('admin.order.order_list', compact('order', 'product', 'order_master'));
+        $items = OrderMaster::with('product_masters')->get();
+        foreach ($items as $key) 
+        {
+            $items_availability[$count] = $key;
+            $count++;
+        }
+
+        return view('admin.order.order_list', compact('order', 'product', 'order_master','items_availability'));
     }
 
     /**
@@ -67,19 +76,15 @@ class OrderMasterController extends Controller
         $product = ProductMaster::all();
         $order = OrderMaster::with('user')->get();
 
-        // $order = $order_master->id;
-
-        // $product_list = [];
-        // foreach($product as $products){
-        //     $product_list[$products->id] = $products->title;
-        // }
         Log::create(['module_name'=>'order_create', 'user_id'=>Auth::id()]);
         
         // return view('admin.order.order_item', compact('order_master', 'order', 'product'));
         
-        $order_id = Response::json($order);
+        // $order_id = Response::json($order);
         
-        return view('admin.order.order_list', compact('order_id', 'product', 'order'));        
+        // return view('admin.order.order_list', compact('order_id', 'product', 'order')); 
+        
+        return redirect()->route('order.index')->with('success','Order Updated Successfully');
     }
 
     /**

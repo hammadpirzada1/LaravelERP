@@ -49,11 +49,12 @@
                           <th>Payment</th>
                           <th>Discount</th>
                           <th>Status</th>
+                          <th>Items</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <?php $no=1; $dn = "" ?>
+                        <?php $no=1; $count=0; $dn = "" ?>
                           @foreach($order as $key => $value)
                           <?php if($value->discount_unit == "percentage"){
                               $dn = ' %';
@@ -67,16 +68,30 @@
                             <td >{{$value->user->name}}</td>                            
                             <td >{{$value->payment}}</td>
                             <td >{{$value->discount . $dn}}</td>
-                            <td >{{$value->status}}</td>
+                            @if($value->status == "completed")
+                              <td style="color: green"><b>{{$value->status}}</b></td>
+                            @else
+                              <td>{{$value->status}}</td>
+                            @endif
+                            @if(count($items_availability[$count]->product_masters)>0)
+                              <td>Items Available</td>
+                            @else
+                              <td style="color: red">Not Available</td>
+                            @endif
                             <td style="text-align: center;">
                               <a class="btn btn-info btn-sm" href="javascript:void(0)" id="view-order" data-id="{{$value->id}}" style="font-size: 10px">View</a>
                               @role('admin')
                               <a class="btn btn-success btn-sm" href="javascript:void(0)" id="item-order" data-id="{{$value->id}}"  style="font-size: 10px">Items</a>
                               <a class="btn btn-warning btn-sm" href="javascript:void(0)" id="edit-order" data-id="{{$value->id}}"  style="font-size: 10px">Edit</a>
-                              <a class="btn btn-danger btn-sm" href="javascript:void(0)" id="delete-order" data-id="{{$value->id}}"  style="font-size: 10px">Delete</a>
+                              @if($value->status == "completed")
+                                
+                              @else
+                                <a class="btn btn-danger btn-sm" href="javascript:void(0)" id="delete-order" data-id="{{$value->id}}"  style="font-size: 10px">Delete</a>
+                              @endif
                               @endrole
                             </td>
                           </tr>
+                          <?php $count++;?>
                           @endforeach 
                       </tbody>
                     </table>
@@ -115,7 +130,7 @@
 
                   <!-- /Add Order Items Area -->
                   <div class="modal fade" id="AddItems" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
+                    <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
                           <h4 class="modal-title" id="modal_title">Add Order Items</h4>
@@ -131,10 +146,10 @@
                               <table class="table table-bordered table-responsive table-hover" id="table">
                                     <thead>
                                       <tr>
-                                        <th>Item</th>
-                                        <td style="text-align: center;" colspan="2">
-                                          <button type="button" class="btn btn-success add-row">Add</button>
-                                          <button type="button" class="btn btn-danger delete-row">Remove</button>
+                                        <th width="50%">Item</th>
+                                        <td width="50%" style="text-align: center;" colspan="2">
+                                          <button type="button" class="btn btn-success btn-sm add-row">Add</button>
+                                          <button type="button" class="btn btn-danger btn-sm delete-row">Remove</button>
                                         </td>               
                                       </tr>
                                     </thead>
@@ -297,7 +312,7 @@
         $('body').on('click', '#edit-order', function () {
           var p_id = $(this).data('id');
           $('#ord_id').val(p_id);
-          $.get('http://127.0.0.1:8000/order/' + p_id + '/edit', function (data) {
+          $.get('http://127.0.0.1:8000/admin/order/' + p_id + '/edit', function (data) {
               $('#EditOrder').modal('show');
               $('.EditForm #title').val(data.title);
               $('.EditForm #status').val(data.status);
@@ -316,7 +331,7 @@
         
         $('body').on('click', '#view-order', function () {
           var p_id = $(this).data('id');
-          $.get('http://127.0.0.1:8000/order/' + p_id, function (data) {
+          $.get('http://127.0.0.1:8000/admin/order/' + p_id, function (data) {
             $('#DetailOrder').modal('show');
             if(data[1].product_masters.length > 0)
             {
@@ -349,7 +364,7 @@
         $('body').on('click', '#item-order', function () {
           var f_id = $(this).data('id');
           $('#form_id').val(f_id);
-          $.get('http://127.0.0.1:8000/order/' + f_id + '/edit', function (data) {
+          $.get('http://127.0.0.1:8000/admin/order/' + f_id + '/edit', function (data) {
               $('#AddItems').modal('show');
               i_id = data.id;
               i_dis = data.discount;

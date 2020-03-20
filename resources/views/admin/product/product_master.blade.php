@@ -97,25 +97,13 @@
                                 {{Form::textarea('long_desc', null, ['class' => 'form-control','id' => 'long_desc','placeholder' => 'Enter Product Full Description', 'rows' => '3'])}}
                                 {{$errors->first('long_desc', 'long description required')}}
                             </div>
-                          </div>
-
-                          <?php 
-                            $name = null;
-                            $name2 = null;
-                            if($check == 1){
-                              $name = Auth::user()->name;
-                            }
-                            else{
-                              $name = $product->created_by;
-                              $name2 = Auth::user()->name;
-                            }
-                          ?>
+                          </div>                          
 
                           <div class="col-md-4">
                               <div class="form-group">
                                 <!-- {{Form::label('created_by','Created By')}}
                                 <div class="form-group {{$errors->has('created_by') ? 'has-error' : ''}} "></div> -->
-                                  {{Form::hidden('created_by', $name, ['class' => 'form-control','id' => 'created_by', 'placeholder' => 'Created By', 'readonly' => 'true'])}}
+                                  {{Form::hidden('created_by',null, ['class' => 'form-control','id' => 'created_by', 'placeholder' => 'Created By', 'readonly' => 'true'])}}
                                   <!-- {{$errors->first('created_by','message')}} -->
                               </div>
                           </div>
@@ -124,7 +112,7 @@
                               <div class="form-group">
                                 <!-- {{Form::label('modified_by','Modified By')}}
                                 <div class="form-group {{$errors->has('modified_by') ? 'has-error' : ''}} "></div> -->
-                                {{Form::hidden('modified_by', $name2, ['class' => 'form-control','id' => 'modified_by', 'placeholder' => 'Modified By','readonly' => 'true'])}}
+                                {{Form::hidden('modified_by', null, ['class' => 'form-control','id' => 'modified_by', 'placeholder' => 'Modified By','readonly' => 'true'])}}
                                 <!-- {{$errors->first('modified_by','message')}} -->
                               </div>
                           </div>

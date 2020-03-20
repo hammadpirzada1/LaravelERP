@@ -18,13 +18,16 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
-	Route::view('dashboard', 'admin/index');
-	Route::view('home', 'admin/index');
-	Route::resource('product', 'ProductMasterController');
-	Route::resource('category', 'ProductCategoryController');
-	Route::resource('order', 'OrderMasterController');
-	Route::resource('warehouse', 'WarehouseController');
-	Route::resource('role', 'RoleController');
-	Route::resource('user', 'UserController');
+	Route::view('dashboard', 'admin/home');
+	Route::view('admin/home', 'admin/home');
+	Route::resource('admin/product', 'ProductMasterController');
+	Route::resource('admin/category', 'ProductCategoryController');
+	Route::resource('admin/order', 'OrderMasterController');
+	Route::resource('admin/warehouse', 'WarehouseController');
+	Route::resource('admin/role', 'RoleController');
+	Route::resource('admin/user', 'UserController');
+	Route::resource('admin/purchase', 'PurchaseMasterController');
 	Route::get('/cart', 'OrderMasterController@cart')->name('order.cart');
+	Route::get('/addProducts', 'WarehouseController@addProducts')->name('warehouse.products');
+
 });

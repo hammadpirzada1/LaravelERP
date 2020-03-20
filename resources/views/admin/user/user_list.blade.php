@@ -187,7 +187,7 @@
         $('body').on('click', '#edit-user', function () {
           var u_id = $(this).data('id');
           $('#user_id').val(u_id);
-          $.get('http://127.0.0.1:8000/user/' + u_id + '/edit', function (data) {
+          $.get('http://127.0.0.1:8000/admin/user/' + u_id + '/edit', function (data) {
               $('#EditUser').modal('show');
               $('.EditForm #role_id').val(data.role_id);
               $('.EditForm #name').val(data.name);
@@ -204,7 +204,7 @@
         
         $('body').on('click', '#view-user', function () {
           var u_id = $(this).data('id');
-          $.get('http://127.0.0.1:8000/user/' + u_id, function (data) {
+          $.get('http://127.0.0.1:8000/admin/user/' + u_id, function (data) {
             $('#DetailUser').modal('show');
               $('#d_role_id').html(data.role_id);
               $('#d_name').html(data.name);
