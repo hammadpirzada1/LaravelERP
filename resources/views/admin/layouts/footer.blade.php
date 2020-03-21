@@ -51,10 +51,6 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
 
-<script src="https://use.fontawesome.com/db6a1d2b54.js"></script>
-
-
-
 @yield('new_script')
 
 </body>

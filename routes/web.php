@@ -27,7 +27,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('admin/role', 'RoleController');
 	Route::resource('admin/user', 'UserController');
 	Route::resource('admin/purchase', 'PurchaseMasterController');
-	Route::get('/cart', 'OrderMasterController@cart')->name('order.cart');
-	Route::get('/addProducts', 'WarehouseController@addProducts')->name('warehouse.products');
+	Route::get('/admin/cart', 'OrderMasterController@cart')->name('order.cart');
+	Route::get('/admin/addProducts', 'WarehouseController@addProducts')->name('warehouse.products');
 
 });
